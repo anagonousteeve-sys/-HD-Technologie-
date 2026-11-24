@@ -20,7 +20,7 @@
   const LIGNES_PC = 25;          // nombre de lignes de carrés sur le globe (ordinateur)
   const LIGNES_MOBILE = 20;      // moins sur téléphone (plus léger)
   const REMPLISSAGE = 0.68;      // taille du carré dans sa case (1 = collés, 0.5 = très espacés)
-  const VITESSE_GLOBE = 0.010;   // rotation (plus grand = plus rapide)
+  const VITESSE_GLOBE = 0.006;   // rotation (plus grand = plus rapide)
   const INCLINAISON = 0.25;      // le globe penche vers l'avant
   const PENCHE = -0.45;          // l'axe du globe est penché sur le côté (comme le logo)
   const OUVERTURE = 0.45;        // le croissant s'ouvre plus en haut qu'en bas
