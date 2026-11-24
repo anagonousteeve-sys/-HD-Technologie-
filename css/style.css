@@ -1,0 +1,348 @@
+/* ==================================================
+   style.css : site HD TECHNOLOGIE
+   Partie B (Steeve) : l'ordre des règles compte !
+   ================================================== */
+
+
+/* ---------- 1. Variables de couleurs ---------- */
+:root {
+  --bleu: #1E2A8A;        /* bleu principal : à remplacer par la vraie couleur du logo */
+  --bleu-fonce: #0F1650;  /* bleu foncé : pied de page, début du dégradé */
+  --bleu-clair: #E8EAF8;  /* fond lavande clair des sections */
+  --blanc: #FFFFFF;
+  --texte: #1A1F3D;       /* texte courant */
+  --header-h: 70px;       /* hauteur de l'en-tête (utilisée à plusieurs endroits) */
+}
+
+
+/* ---------- 2. Réglages de base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;   /* la largeur inclut le padding */
+}
+
+html {
+  scroll-behavior: smooth;  /* défilement doux quand on clique sur un lien du menu */
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", Arial, sans-serif;  /* Arial si Montserrat ne charge pas */
+  color: var(--texte);
+  background: var(--blanc);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;   /* une image ne dépasse jamais son conteneur */
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;   /* largeur maximale du contenu */
+  margin: 0 auto;      /* centré */
+  padding: 0 20px;     /* marge intérieure sur téléphone */
+}
+
+
+/* ---------- 3. En-tête fixe ---------- */
+.header {
+  position: fixed;          /* reste en haut quand on défile */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-h);
+  background: var(--blanc);
+  box-shadow: 0 2px 10px rgba(15, 22, 80, 0.12);
+  z-index: 100;             /* au-dessus du reste de la page */
+}
+
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;             /* centré verticalement */
+  justify-content: space-between;  /* logo à gauche, actions à droite */
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 44px;
+  width: auto;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* ---------- 4. Menu sur ordinateur ---------- */
+.nav-list {
+  list-style: none;   /* enlève les puces */
+  margin: 0;
+  padding: 0;
+  display: flex;      /* les liens en ligne */
+  gap: 24px;
+}
+
+.nav-list a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--bleu);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;   /* trait invisible, visible au survol */
+}
+
+.nav-list a:hover {
+  border-bottom-color: var(--bleu);
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--bleu);
+  color: var(--bleu);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-weight: 600;
+  font-family: inherit;   /* un bouton n'hérite pas la police par défaut */
+  cursor: pointer;
+}
+
+
+/* ---------- 5. Boutons ---------- */
+.btn {
+  display: inline-block;
+  background: var(--bleu);
+  color: var(--blanc);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px solid var(--bleu);
+  transition: background 0.2s, color 0.2s;   /* changement doux au survol */
+}
+
+.btn:hover {
+  background: var(--bleu-fonce);
+  border-color: var(--bleu-fonce);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--bleu);
+}
+
+.btn-outline:hover {
+  background: var(--bleu);
+  color: var(--blanc);
+}
+
+.btn-whatsapp {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+}
+
+
+/* ---------- 6. Sections et titres ---------- */
+.section {
+  padding: 80px 0;
+  scroll-margin-top: var(--header-h);   /* l'en-tête ne cache pas la section */
+}
+
+.section:nth-of-type(even) {
+  background: var(--bleu-clair);   /* une section sur deux en lavande clair */
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);   /* s'adapte à l'écran */
+  font-weight: 800;
+  color: var(--bleu);
+  margin: 0 0 30px;
+}
+
+
+/* ---------- 7. Section Accueil (hero) ----------
+   Doit venir APRÈS .section : à précision égale, la dernière règle gagne. */
+.hero {
+  min-height: 100vh;        /* au moins la hauteur de l'écran */
+  display: flex;
+  align-items: center;      /* contenu centré verticalement */
+  padding-top: calc(var(--header-h) + 40px);   /* ne passe pas sous l'en-tête fixe */
+  color: var(--blanc);
+  background: linear-gradient(160deg, var(--bleu-fonce) 0%, var(--bleu) 60%, #5560C4 100%);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+}
+
+.slogan {
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+  opacity: 0.9;
+}
+
+.hero-text {
+  max-width: 560px;
+  margin: 0 0 28px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;   /* les boutons passent à la ligne si pas de place */
+  gap: 14px;
+}
+
+/* Sur fond bleu, le bouton plein devient blanc ; le bouton "contour" reste transparent */
+.hero .btn {
+  background: var(--blanc);
+  color: var(--bleu);
+  border-color: var(--blanc);
+}
+
+.hero .btn:hover {
+  background: var(--bleu-clair);
+  border-color: var(--bleu-clair);
+}
+
+.hero .btn-outline {
+  background: transparent;
+  color: var(--blanc);
+}
+
+.hero .btn-outline:hover {
+  background: var(--blanc);
+  color: var(--bleu);
+}
+
+
+/* ---------- 7b. Animation de fond (canvas créé par js/fond.js) ---------- */
+.hero {
+  position: relative;   /* le canvas se place par rapport à l'accueil */
+  overflow: hidden;     /* rien ne dépasse de la section */
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* les clics passent à travers, les boutons restent cliquables */
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;           /* le texte reste au-dessus de l'animation */
+}
+
+
+/* ---------- 8. Pied de page ---------- */
+.footer {
+  background: var(--bleu-fonce);
+  color: var(--blanc);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.footer-name {
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.footer-slogan {
+  margin: 4px 0 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+
+/* ---------- 9. Version téléphone (burger) : toujours à la FIN ---------- */
+
+/* Le bouton burger : caché sur ordinateur */
+.burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--bleu);
+  border-radius: 6px;
+  cursor: pointer;
+  flex-direction: column;   /* les 3 traits les uns sous les autres */
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--bleu);
+}
+
+/* Écrans de 768 px de large ou moins (tablette et téléphone) */
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav {
+    display: none;                 /* menu caché par défaut */
+    position: absolute;            /* se place sous l'en-tête */
+    top: var(--header-h);
+    left: 0;
+    width: 100%;
+    background: var(--blanc);
+    box-shadow: 0 8px 12px rgba(15, 22, 80, 0.12);
+  }
+
+  .nav.open {
+    display: block;                /* affiché quand JavaScript ajoute "open" */
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 20px 16px;
+  }
+
+  .nav-list a {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bleu-clair);
+  }
+}
+
+/* Très petits écrans : on cache le bouton WhatsApp de l'en-tête pour garder de la place */
+@media (max-width: 480px) {
+  .btn-whatsapp {
+    display: none;
+  }
+}
