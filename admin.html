@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administration | HD TECHNOLOGIE</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-page">
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="HD TECHNOLOGIE" class="logo-img" height="44">
+      </a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-outline">Voir le site</a>
+        <button type="button" class="btn" id="btn-deconnexion" hidden>Se déconnecter</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ÉTAT 1 : non connecté -->
+    <section id="connexion" class="admin-carte">
+      <h1>Connexion administrateur</h1>
+      <form id="form-connexion">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="username">
+        <label for="mdp">Mot de passe</label>
+        <input type="password" id="mdp" required autocomplete="current-password">
+        <button type="submit" class="btn">Se connecter</button>
+        <p id="msg-connexion" class="admin-message"></p>
+      </form>
+    </section>
+
+    <!-- ÉTAT 2 : connecté -->
+    <div id="tableau" hidden>
+
+      <section class="admin-carte">
+        <h2>Statistiques</h2>
+        <p>Visites totales : <strong id="stat-total">-</strong></p>
+        <p>Visiteurs uniques : <strong id="stat-uniques">-</strong></p>
+        <p>Visites aujourd'hui : <strong id="stat-aujourdhui">-</strong></p>
+        <h3>Pages visitées</h3>
+        <ul id="stat-pages"></ul>
+      </section>
+
+      <section class="admin-carte">
+        <h2>Publier une réalisation ou un projet en cours</h2>
+        <form id="form-publier">
+          <label for="photo">Photo</label>
+          <input type="file" id="photo" accept="image/*" required>
+          <label for="statut">Statut</label>
+          <select id="statut">
+            <option value="termine">Terminé</option>
+            <option value="en_cours">En cours</option>
+          </select>
+          <label for="titre-fr">Titre (français, obligatoire)</label>
+          <input type="text" id="titre-fr" required maxlength="120">
+          <label for="desc-fr">Description (français)</label>
+          <textarea id="desc-fr" rows="4" maxlength="1000"></textarea>
+          <p>Anglais (facultatif : il faut remplir le titre ET la description, sinon le site affiche le français)</p>
+          <label for="titre-en">Title (English)</label>
+          <input type="text" id="titre-en" maxlength="120">
+          <label for="desc-en">Description (English)</label>
+          <textarea id="desc-en" rows="4" maxlength="1000"></textarea>
+          <button type="submit" class="btn">Publier</button>
+          <p id="msg-publier" class="admin-message"></p>
+        </form>
+      </section>
+
+      <section class="admin-carte">
+        <h2>Réalisations publiées</h2>
+        <div id="liste-realisations"></div>
+      </section>
+
+      <section class="admin-carte">
+        <h2>Infos du site</h2>
+        <form id="form-reglages">
+          <label for="reg-whatsapp">WhatsApp (chiffres seulement, avec l'indicatif : 2290166227171)</label>
+          <input type="text" id="reg-whatsapp" inputmode="numeric">
+          <label for="reg-telephone">Téléphone</label>
+          <input type="text" id="reg-telephone">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email">
+          <label for="reg-slogan-fr">Slogan (français)</label>
+          <input type="text" id="reg-slogan-fr">
+          <label for="reg-slogan-en">Slogan (English)</label>
+          <input type="text" id="reg-slogan-en">
+          <button type="submit" class="btn">Enregistrer</button>
+          <p id="msg-reglages" class="admin-message"></p>
+        </form>
+      </section>
+
+      <section class="admin-carte">
+        <h2>Changer mon mot de passe</h2>
+        <form id="form-mdp">
+          <label for="mdp-nouveau">Nouveau mot de passe (12 caractères minimum)</label>
+          <input type="password" id="mdp-nouveau" required autocomplete="new-password">
+          <label for="mdp-confirm">Confirmer le mot de passe</label>
+          <input type="password" id="mdp-confirm" required autocomplete="new-password">
+          <button type="submit" class="btn">Changer le mot de passe</button>
+          <p id="msg-mdp" class="admin-message"></p>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</body>
+</html>

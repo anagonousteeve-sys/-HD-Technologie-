@@ -36,6 +36,7 @@
       <div class="header-actions">
         <button class="lang-btn" id="lang-btn" type="button">FR / EN</button>
         <a href="https://wa.me/2290166227171" class="btn btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+         <a href="admin.html" class="btn btn-outline" id="admin-link">Se connecter</a>
         <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
           <span></span><span></span><span></span>
         </button>
@@ -59,14 +60,14 @@
         <section id="services" class="section">
       <div class="container">
         <h2 class="section-title">Nos services</h2>
-        <p>Section à remplir à l'étape 2.</p>
+        <div id="services-grid" class="services-grid"></div>
       </div>
     </section>
 
     <section id="realisations" class="section">
       <div class="container">
         <h2 class="section-title">Nos réalisations</h2>
-        <p>Section à remplir à l'étape 5.</p>
+        <div id="realisations-grid" class="realisations-grid"></div>
       </div>
     </section>
 
@@ -94,6 +95,13 @@
   </footer>
 
   <!-- Le script du menu de Steeve -->
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/reglages.js" defer></script>
+    <script src="js/services.js" defer></script>
+    <script src="js/realisations.js" defer></script>
+    <script src="js/visites.js" defer></script>
   <script src="js/menu.js" defer></script>
   <script src="js/fond.js" defer></script>
 </body>
