@@ -16,12 +16,21 @@ async function chargerServices() {
 async function chargerRealisations() {
   const { data, error } = await db
     .from("realisations")
-    .select("*")
+    .select("*, realisation_images(image_url, ordre)")
     .eq("visible", true)
     .order("ordre", { ascending: true })
-    .order("date_ajout", { ascending: false });   // les plus récentes d'abord
+    .order("date_ajout", { ascending: false });
   if (error) { console.error("Erreur réalisations :", error.message); return []; }
-  return data;
+
+  return data.map((r) => {
+    const images = (r.realisation_images || [])
+      .slice()
+      .sort((a, b) => a.ordre - b.ordre)
+      .map((i) => i.image_url);
+    delete r.realisation_images;
+    r.images = images.length ? images : [r.image_url];
+    return r;
+  });
 }
 
 async function chargerReglages() {
