@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <header class="header">
+  <header class="header">
     <div class="container header-inner">
 
       <a href="#accueil" class="logo">
@@ -25,18 +25,18 @@
 
       <nav class="nav" id="menu" aria-label="Menu principal">
         <ul class="nav-list">
-          <li><a href="#accueil">Accueil</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#realisations">Réalisations</a></li>
-          <li><a href="#apropos">À propos</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#accueil" data-i18n="menu.accueil">Accueil</a></li>
+          <li><a href="#services" data-i18n="menu.services">Services</a></li>
+          <li><a href="#realisations" data-i18n="menu.realisations">Réalisations</a></li>
+          <li><a href="#apropos" data-i18n="menu.apropos">À propos</a></li>
+          <li><a href="#contact" data-i18n="menu.contact">Contact</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
         <button class="lang-btn" id="lang-btn" type="button">FR / EN</button>
         <a href="https://wa.me/2290166227171" class="btn btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
-         <a href="admin.html" class="btn btn-outline" id="admin-link">Se connecter</a>
+        <a href="admin.html" class="btn btn-outline" id="admin-link">Se connecter</a>
         <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
           <span></span><span></span><span></span>
         </button>
@@ -46,62 +46,64 @@
   </header>
 
   <main>
-        <section id="accueil" class="section hero">
+    <section id="accueil" class="section hero">
       <div class="container">
         <h1>HD TECHNOLOGIE</h1>
         <p class="slogan">Connectons le monde autrement</p>
-        <p class="hero-text">Réseau, sécurité, domotique, énergie renouvelable : à Bohicon et Cotonou.</p>
+        <p class="hero-text" data-i18n="hero.texte">Réseau, sécurité, domotique, énergie renouvelable : à Bohicon et Cotonou.</p>
         <div class="hero-buttons">
-          <a href="#contact" class="btn">Demander un devis</a>
-          <a href="tel:+2290166227171" class="btn btn-outline">Nous appeler</a>
+          <a href="#contact" class="btn" data-i18n="hero.devis">Demander un devis</a>
+          <a href="tel:+2290166227171" class="btn btn-outline" data-i18n="hero.appeler">Nous appeler</a>
         </div>
       </div>
     </section>
-        <section id="services" class="section">
+
+    <section id="services" class="section">
       <div class="container">
-        <h2 class="section-title">Nos services</h2>
+        <h2 class="section-title" data-i18n="titre.services">Nos services</h2>
         <div id="services-grid" class="services-grid"></div>
       </div>
     </section>
 
     <section id="realisations" class="section">
       <div class="container">
-        <h2 class="section-title">Nos réalisations</h2>
+        <h2 class="section-title" data-i18n="titre.realisations">Nos réalisations</h2>
         <div id="realisations-grid" class="realisations-grid"></div>
       </div>
     </section>
 
     <section id="apropos" class="section">
       <div class="container">
-        <h2 class="section-title">À propos</h2>
+        <h2 class="section-title" data-i18n="titre.apropos">À propos</h2>
         <p>Section à remplir à l'étape 2.</p>
       </div>
     </section>
 
     <section id="contact" class="section">
       <div class="container">
-        <h2 class="section-title">Contact</h2>
+        <h2 class="section-title" data-i18n="titre.contact">Contact</h2>
         <p>Section à remplir à l'étape 6.</p>
       </div>
     </section>
   </main>
 
-    <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <p class="footer-name">HD TECHNOLOGIE</p>
       <p class="footer-slogan">Connectons le monde autrement</p>
-      <p class="footer-copy">© 2026 HD TECHNOLOGIE. Tous droits réservés.</p>
+      <p class="footer-copy" data-i18n="footer.copy">© 2026 HD TECHNOLOGIE. Tous droits réservés.</p>
     </div>
   </footer>
 
-  <!-- Le script du menu de Steeve -->
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
-    <script src="js/config.js" defer></script>
-    <script src="js/data.js" defer></script>
-    <script src="js/reglages.js" defer></script>
-    <script src="js/services.js" defer></script>
-    <script src="js/realisations.js" defer></script>
-    <script src="js/visites.js" defer></script>
+  <!-- Scripts : l'ordre compte (langue.js doit venir APRÈS data.js, services.js et realisations.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/reglages.js" defer></script>
+  <script src="js/services.js" defer></script>
+  <script src="js/realisations.js" defer></script>
+  <script src="js/langue.js" defer></script>
+  <script src="js/visites.js" defer></script>
   <script src="js/menu.js" defer></script>
   <script src="js/fond.js" defer></script>
 </body>
