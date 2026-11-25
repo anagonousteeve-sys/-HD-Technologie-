@@ -1,0 +1,257 @@
+/* ==================================================
+   admin.css : page d'administration (admin.html)
+   Chargé APRÈS style.css.
+   ================================================== */
+
+:root {
+  --bleu: #1E2A8A;
+  --bleu-fonce: #0F1650;
+  --bleu-clair: #E8EAF8;
+  --blanc: #FFFFFF;
+  --texte: #1A1F3D;
+  --rouge: #B3261E;
+  --vert: #1E7A45;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Le JavaScript cache/montre des blocs avec l'attribut hidden */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Page ---------- */
+.admin-page {
+  margin: 0;
+  padding: 0 0 48px;         /* les côtés sont gérés par .container */
+  font-family: "Montserrat", Arial, sans-serif;
+  color: var(--texte);
+  background: var(--bleu-clair);
+  line-height: 1.6;
+}
+
+/* L'en-tête est fixe (70 px) : on décale le contenu pour qu'il ne passe pas dessous */
+.admin-page main {
+  padding-top: calc(var(--header-h, 70px) + 24px);
+}
+
+.admin-page h1 {
+  max-width: 760px;
+  margin: 0 auto 20px;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 800;
+  color: var(--bleu);
+}
+
+.admin-page h2 {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  color: var(--bleu);
+}
+
+.admin-page h3 {
+  margin: 18px 0 8px;
+  font-size: 1rem;
+  color: var(--bleu);
+}
+
+.admin-page a {
+  color: var(--bleu);
+  font-weight: 600;
+}
+
+/* ---------- Un bloc ---------- */
+.admin-carte {
+  max-width: 760px;
+  margin: 0 auto 20px;
+  padding: 24px 20px;
+  background: var(--blanc);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+}
+
+/* ---------- Une ligne de liste avec des boutons ---------- */
+.admin-ligne {
+  display: flex;
+  flex-wrap: wrap;             /* sur téléphone, les boutons passent sous le texte */
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bleu-clair);
+}
+
+.admin-ligne:last-child {
+  border-bottom: none;
+}
+
+.admin-ligne > :first-child:not(img),
+.admin-ligne > img + * {
+  flex: 1 1 200px;             /* le texte prend la place disponible */
+  min-width: 0;
+  overflow-wrap: anywhere;     /* un long titre ne déborde pas */
+}
+
+.admin-ligne img {
+  flex: 0 0 auto;              /* la miniature garde ses 64 px */
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ---------- Message de retour ---------- */
+.admin-message {
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-height: 1.4em;           /* évite que la page saute quand un message apparaît */
+}
+
+/* Variantes facultatives (à valider avec le binôme Supabase avant de les utiliser) */
+.admin-message.erreur {
+  color: var(--rouge);
+}
+
+.admin-message.succes {
+  color: var(--vert);
+}
+
+/* ---------- Formulaires ---------- */
+.admin-page form {
+  display: grid;
+  gap: 6px;                    /* petit écart : chaque label reste collé à son champ */
+}
+
+.admin-page label {
+  display: block;
+  margin: 10px 0 0;            /* l'espace est AU-DESSUS du label, pas en dessous */
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-page form p:not(.admin-message) {
+  margin: 14px 0 0;            /* ex. la phrase "Anglais (facultatif...)" */
+  font-size: 0.9rem;
+}
+
+.admin-page input[type="text"],
+.admin-page input[type="email"],
+.admin-page input[type="password"],
+.admin-page input[type="tel"],
+.admin-page input[type="url"],
+.admin-page input[type="number"],
+.admin-page select,
+.admin-page textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 1rem;             /* 16 px minimum : évite le zoom automatique sur iPhone */
+  color: var(--texte);
+  background: var(--blanc);
+  border: 1px solid #B8BDE0;
+  border-radius: 8px;
+}
+
+.admin-page textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.admin-page input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  background: var(--bleu-clair);
+  border: 1px dashed var(--bleu);
+  border-radius: 8px;
+}
+
+.admin-page input:focus,
+.admin-page select:focus,
+.admin-page textarea:focus,
+.admin-page button:focus-visible {
+  outline: 3px solid rgba(30, 42, 138, 0.35);
+  outline-offset: 1px;
+  border-color: var(--bleu);
+}
+
+/* ---------- Boutons ---------- */
+.admin-page button {
+  padding: 12px 20px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--blanc);
+  background: var(--bleu);
+  border: 2px solid var(--bleu);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-page button:hover {
+  background: var(--bleu-fonce);
+  border-color: var(--bleu-fonce);
+}
+
+.admin-page button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Bouton d'un formulaire : sa taille normale, à gauche (pas pleine largeur) */
+.admin-page form button {
+  justify-self: start;
+  margin-top: 10px;
+}
+
+/* Boutons dans une ligne de liste : plus petits */
+.admin-ligne button {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+/* Bouton Supprimer : toujours le dernier bouton d'une ligne de la liste */
+.admin-ligne button:last-of-type {
+  background: var(--blanc);
+  color: var(--rouge);
+  border-color: var(--rouge);
+}
+
+.admin-ligne button:last-of-type:hover {
+  background: var(--rouge);
+  color: var(--blanc);
+  border-color: var(--rouge);
+}
+
+/* ---------- Téléphone ---------- */
+@media (max-width: 600px) {
+  .admin-carte {
+    padding: 20px 16px;
+  }
+
+  .admin-ligne > :first-child:not(img) {
+    flex-basis: 100%;
+  }
+
+  .admin-page form button {
+    width: 100%;
+  }
+
+  /* En-tête de la page admin : plus compact pour que tout tienne sur une ligne */
+  .admin-page .header-actions .btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .admin-page .logo-img {
+    height: 36px;
+  }
+}
