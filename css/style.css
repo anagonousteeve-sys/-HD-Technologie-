@@ -42,6 +42,11 @@ a {
   text-decoration: none;
 }
 
+/* Le JavaScript cache/montre des blocs avec l'attribut hidden : cette règle le rend fiable */
+[hidden] {
+  display: none !important;
+}
+
 .container {
   width: 100%;
   max-width: 1100px;   /* largeur maximale du contenu */
@@ -307,8 +312,8 @@ a {
   background: var(--bleu);
 }
 
-/* Écrans de 768 px de large ou moins (tablette et téléphone) */
-@media (max-width: 768px) {
+/* Écrans de 960 px de large ou moins : le menu passe en burger */
+@media (max-width: 960px) {
   .burger {
     display: flex;
   }
@@ -345,4 +350,259 @@ a {
   .btn-whatsapp {
     display: none;
   }
+}
+
+
+/* ---------- 10. Section Services : grille et cartes ---------- */
+.section-intro {
+  max-width: 640px;
+  margin: 0 0 30px;
+  font-size: 1.05rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));   /* colonnes adaptatives */
+  gap: 24px;
+}
+
+.service-card {
+  background: var(--blanc);
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);   /* la carte monte un peu */
+  box-shadow: 0 10px 24px rgba(15, 22, 80, 0.16);
+}
+
+.service-title {
+  margin: 16px 0 8px;
+  font-size: 1.15rem;
+  color: var(--bleu);
+}
+
+.service-text {
+  margin: 0;
+}
+
+
+/* ---------- 11. Icônes des services (dessinées en CSS avec mask-image) ---------- */
+.service-icon {
+  display: block; 
+  width: 48px;
+  height: 48px;
+  background-color: var(--bleu);   /* couleur de l'icône */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  /* icône par défaut : un rond */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="reseau"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Ccircle cx='5' cy='19' r='2.5'/%3E%3Ccircle cx='19' cy='19' r='2.5'/%3E%3Cpath d='M12 7.5v4M12 11.5l-5.5 5.5M12 11.5l5.5 5.5'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Ccircle cx='5' cy='19' r='2.5'/%3E%3Ccircle cx='19' cy='19' r='2.5'/%3E%3Cpath d='M12 7.5v4M12 11.5l-5.5 5.5M12 11.5l5.5 5.5'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="camera"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='6' width='14' height='12' rx='2'/%3E%3Cpath d='M16 10l6-3v10l-6-3z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='6' width='14' height='12' rx='2'/%3E%3Cpath d='M16 10l6-3v10l-6-3z'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="securite"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="domotique"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11l9-8 9 8'/%3E%3Cpath d='M5 10v10h14V10'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11l9-8 9 8'/%3E%3Cpath d='M5 10v10h14V10'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="energie"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1'/%3E%3C/svg%3E");
+}
+
+.service-icon[data-icone="code"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 7l-5 5 5 5'/%3E%3Cpath d='M16 7l5 5-5 5'/%3E%3Cpath d='M14 4l-4 16'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 7l-5 5 5 5'/%3E%3Cpath d='M16 7l5 5-5 5'/%3E%3Cpath d='M14 4l-4 16'/%3E%3C/svg%3E");
+}
+
+
+/* ---------- 12. Section À propos ---------- */
+.about {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;   /* le texte prend un peu plus de place */
+  gap: 40px;
+  align-items: start;
+}
+
+.about-text {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.about-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.about-point {
+  background: var(--blanc);
+  border-left: 4px solid var(--bleu);
+  border-radius: 8px;
+  padding: 14px 18px;
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+}
+
+.about-point strong {
+  display: block;
+  font-size: 1.3rem;
+  color: var(--bleu);
+}
+
+.about-point span {
+  font-size: 0.9rem;
+}
+
+/* Sur tablette et téléphone : une seule colonne */
+@media (max-width: 768px) {
+  .about {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+
+/* ---------- 13. Bouton "Se connecter" (lien vers admin.html) ---------- */
+#admin-link,
+.lang-btn {
+  white-space: nowrap;   /* le texte ne passe pas sur deux lignes */
+}
+
+#admin-link {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+}
+
+/* Téléphone : le bouton devient plus compact pour garder la place du logo et du burger */
+@media (max-width: 768px) {
+  .header-actions {
+    gap: 8px;
+  }
+
+  #admin-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .lang-btn {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Téléphone (600 px et moins) : "Se connecter" passe dans le menu burger.
+   Il faut pour cela la ligne <li class="nav-admin"> dans le <nav> de index.html.
+   Sans elle, le bouton compact du header reste affiché (rien ne disparaît). */
+.nav-admin {
+  display: none;   /* sur ordinateur, le bouton du header suffit */
+}
+
+.logo {
+  flex-shrink: 0;  /* le logo ne se fait jamais écraser */
+}
+
+@media (max-width: 600px) {
+  .nav-admin {
+    display: list-item;
+  }
+
+  .header:has(.nav-admin) #admin-link {
+    display: none;
+  }
+
+  .nav-admin a {
+    color: var(--bleu);
+    font-weight: 800;
+  }
+}
+
+
+/* ---------- 14. Section Réalisations : grille et cartes ---------- */
+.realisations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));   /* cartes plus larges */
+  gap: 28px;
+}
+
+.realisation-card {
+  position: relative;          /* le badge de statut se place par rapport à la carte */
+  display: flex;
+  flex-direction: column;
+  background: var(--blanc);
+  border: 1px solid var(--bleu-clair);   /* la section est sur fond blanc : le contour fait ressortir la carte */
+  border-radius: 12px;
+  overflow: hidden;            /* l'image suit les coins arrondis */
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.realisation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 22, 80, 0.16);
+}
+
+.realisation-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;         /* cadre proportionnel : la hauteur suit la largeur de la carte */
+  object-fit: contain;         /* l'image entière est visible, sans coupe */
+  background: var(--bleu-clair);   /* bandes de couleur si la photo n'a pas les mêmes proportions */
+}
+
+/* Badge de statut posé en haut à gauche de l'image */
+.realisation-statut {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--blanc);
+  background: var(--bleu);     /* couleur par défaut si data-statut est absent */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.realisation-statut[data-statut="en_cours"] {
+  background: #C2570C;         /* orange foncé : travaux en cours */
+}
+
+.realisation-statut[data-statut="termine"] {
+  background: #1E7A45;         /* vert : réalisation terminée */
+}
+
+.realisation-title {
+  margin: 18px 22px 8px;
+  font-size: 1.2rem;
+  color: var(--bleu);
+}
+
+.realisation-text {
+  margin: 0 22px 24px;
+  font-size: 1rem;
 }
