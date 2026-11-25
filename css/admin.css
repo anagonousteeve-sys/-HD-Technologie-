@@ -255,3 +255,23 @@
     height: 36px;
   }
 }
+
+/* Case « Afficher le mot de passe » */
+.voir-mdp-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px;
+  font-weight: 400;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.voir-mdp-label input[type="checkbox"] {
+  width: 18px;                    /* annule un éventuel width: 100% des champs */
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--bleu);
+  cursor: pointer;
+}

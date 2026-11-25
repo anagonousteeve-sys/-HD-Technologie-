@@ -286,6 +286,22 @@ a {
   opacity: 0.7;
 }
 
+/* Lien discret « Espace admin » en pied de page */
+.footer-admin {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 8px 6px;               /* zone de toucher confortable sur téléphone */
+  font-size: 0.8rem;
+  text-decoration: underline;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.footer-admin:hover,
+.footer-admin:focus-visible {
+  opacity: 1;
+}
+
 
 /* ---------- 9. Version téléphone (burger) : toujours à la FIN ---------- */
 
@@ -486,26 +502,19 @@ a {
 }
 
 
-/* ---------- 13. Bouton "Se connecter" (lien vers admin.html) ---------- */
-#admin-link,
+/* ---------- 13. Bouton de langue et logo ---------- */
 .lang-btn {
   white-space: nowrap;   /* le texte ne passe pas sur deux lignes */
 }
 
-#admin-link {
-  padding: 8px 14px;
-  font-size: 0.9rem;
+.logo {
+  flex-shrink: 0;        /* le logo ne se fait jamais écraser */
 }
 
-/* Téléphone : le bouton devient plus compact pour garder la place du logo et du burger */
+/* Téléphone : boutons plus compacts pour garder la place du logo et du burger */
 @media (max-width: 768px) {
   .header-actions {
     gap: 8px;
-  }
-
-  #admin-link {
-    padding: 6px 10px;
-    font-size: 0.8rem;
   }
 
   .lang-btn {
@@ -513,33 +522,6 @@ a {
     font-size: 0.8rem;
   }
 }
-
-/* Téléphone (600 px et moins) : "Se connecter" passe dans le menu burger.
-   Il faut pour cela la ligne <li class="nav-admin"> dans le <nav> de index.html.
-   Sans elle, le bouton compact du header reste affiché (rien ne disparaît). */
-.nav-admin {
-  display: none;   /* sur ordinateur, le bouton du header suffit */
-}
-
-.logo {
-  flex-shrink: 0;  /* le logo ne se fait jamais écraser */
-}
-
-@media (max-width: 600px) {
-  .nav-admin {
-    display: list-item;
-  }
-
-  .header:has(.nav-admin) #admin-link {
-    display: none;
-  }
-
-  .nav-admin a {
-    color: var(--bleu);
-    font-weight: 800;
-  }
-}
-
 
 /* ---------- 14. Section Réalisations : grille et cartes ---------- */
 .realisations-grid {
@@ -605,4 +587,371 @@ a {
 .realisation-text {
   margin: 0 22px 24px;
   font-size: 1rem;
+}
+
+/* ---------- 15. Carrousel des réalisations ---------- */
+.carousel {
+  position: relative;               /* les flèches se placent par rapport au carrousel */
+}
+
+/* La piste : les cartes en ligne, qui défilent horizontalement */
+.realisations-grid {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;    /* chaque carte s'arrête bien alignée */
+  scroll-padding-inline: 4px;
+  padding: 10px 4px 24px;           /* place pour l'ombre et la montée de la carte au survol */
+  scrollbar-width: none;            /* cache la barre de défilement (Firefox) */
+}
+
+.realisations-grid::-webkit-scrollbar {
+  display: none;                    /* cache la barre de défilement (Chrome, Safari) */
+}
+
+/* Une carte : 2 par ligne sur ordinateur */
+.realisation-card {
+  flex: 0 0 calc((100% - 28px) / 2);
+  scroll-snap-align: start;
+  cursor: pointer;                  /* un clic ouvre la modale */
+}
+
+.realisation-img {
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: contain;              /* l'image entière, sans coupe */
+}
+
+/* Les flèches */
+.carousel-btn {
+  position: absolute;
+  top: 40%;                         /* à hauteur de l'image */
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.1rem;
+  color: var(--bleu);
+  background: var(--blanc);
+  border: 1px solid var(--bleu-clair);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(15, 22, 80, 0.2);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.carousel-btn:hover {
+  background: var(--bleu);
+  color: var(--blanc);
+}
+
+.carousel-btn:focus-visible {
+  outline: 3px solid rgba(30, 42, 138, 0.35);
+  outline-offset: 2px;
+}
+
+.carousel-prev {
+  left: 8px;
+}
+
+.carousel-next {
+  right: 8px;
+}
+
+/* Téléphone : une seule carte à la fois */
+@media (max-width: 700px) {
+  .realisation-card {
+    flex-basis: 100%;
+  }
+}
+
+/* ---------- 16. Modale d'une réalisation ---------- */
+.modale {
+  position: fixed;
+  inset: 0;
+  z-index: 200;                     /* au-dessus de l'en-tête (100) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* L'attribut hidden est géré par la règle [hidden] du début du fichier */
+
+.modale-fond {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 40, 0.88);   /* fond sombre */
+}
+
+.modale-contenu {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 92vh;
+  overflow-y: auto;                 /* le texte défile si la fenêtre est trop petite */
+  background: var(--blanc);
+  border-radius: 14px;
+  padding-bottom: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Bouton fermer : reste visible en haut à droite, posé sur la galerie */
+.modale-fermer {
+  position: sticky;
+  top: 10px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 10px 10px -54px auto;     /* -54px = hauteur + marge : il chevauche la galerie */
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--blanc);
+  background: rgba(15, 22, 80, 0.85);
+  border: 2px solid var(--blanc);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modale-fermer:hover {
+  background: var(--bleu);
+}
+
+/* Galerie */
+.modale-galerie {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  background: var(--bleu-fonce);
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+}
+
+.modale-image {
+  display: block;
+  width: 100%;
+  max-height: 65vh;
+  object-fit: contain;              /* image entière, jamais coupée */
+}
+
+.modale-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.1rem;
+  color: var(--bleu);
+  background: var(--blanc);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modale-btn:hover {
+  background: var(--bleu);
+  color: var(--blanc);
+}
+
+.modale-prec { left: 12px; }
+.modale-suiv { right: 12px; }
+
+.modale-fermer:focus-visible,
+.modale-btn:focus-visible {
+  outline: 3px solid #9AA4FF;
+  outline-offset: 2px;
+}
+
+.modale-compteur {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 3px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blanc);
+  background: rgba(15, 22, 80, 0.8);
+  border-radius: 999px;
+}
+
+/* Texte */
+.modale-statut {
+  display: inline-block;
+  margin: 20px 28px 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--blanc);
+  background: var(--bleu);
+}
+
+.modale-statut[data-statut="en_cours"] { background: #C2570C; }
+.modale-statut[data-statut="termine"]  { background: #1E7A45; }
+
+.modale-contenu h3 {
+  margin: 10px 28px 12px;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  color: var(--bleu);
+}
+
+.modale-contenu p {
+  margin: 0 28px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  white-space: pre-line;            /* respecte les retours à la ligne de la description */
+}
+
+/* Téléphone : la modale prend tout l'écran */
+@media (max-width: 600px) {
+  .modale {
+    padding: 0;
+  }
+
+  .modale-contenu {
+    max-width: none;
+    height: 100%;
+    max-height: 100vh;
+    max-height: 100dvh;             /* tient compte de la barre d'adresse du téléphone */
+    border-radius: 0;
+  }
+
+  .modale-galerie {
+    border-radius: 0;
+  }
+
+  .modale-image {
+    max-height: 50vh;
+  }
+
+  .modale-statut {
+    margin: 18px 18px 0;
+  }
+
+  .modale-contenu h3,
+  .modale-contenu p {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+}
+
+/* ---------- 17. Visionneuse plein écran des images ---------- */
+.modale-image {
+  cursor: zoom-in;                  /* indique qu'un clic agrandit */
+}
+
+.modale-image:focus-visible {
+  outline: 3px solid #9AA4FF;
+  outline-offset: -3px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;                     /* au-dessus de la modale (200) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 70px;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;              /* image entière, jamais coupée */
+  user-select: none;
+}
+
+.lightbox-fermer,
+.lightbox-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: var(--blanc);
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lightbox-fermer:hover,
+.lightbox-btn:hover {
+  background: var(--blanc);
+  color: var(--bleu-fonce);
+}
+
+.lightbox-fermer:focus-visible,
+.lightbox-btn:focus-visible {
+  outline: 3px solid #9AA4FF;
+  outline-offset: 2px;
+}
+
+.lightbox-fermer {
+  top: 12px;
+  right: 12px;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.lightbox-btn {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.lightbox-prec { left: 12px; }
+.lightbox-suiv { right: 12px; }
+
+.lightbox-compteur {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blanc);
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+/* Téléphone : l'image prend presque tout l'écran, les flèches se posent dessus */
+@media (max-width: 600px) {
+  .lightbox {
+    padding: 64px 8px 48px;
+  }
+
+  .lightbox-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-prec { left: 6px; }
+  .lightbox-suiv { right: 6px; }
 }
