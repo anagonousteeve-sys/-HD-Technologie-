@@ -36,7 +36,6 @@
       <div class="header-actions">
         <button class="lang-btn" id="lang-btn" type="button">FR / EN</button>
         <a href="https://wa.me/2290166227171" class="btn btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="admin.html" class="btn btn-outline" id="admin-link">Se connecter</a>
         <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
           <span></span><span></span><span></span>
         </button>
@@ -68,7 +67,13 @@
     <section id="realisations" class="section">
       <div class="container">
         <h2 class="section-title" data-i18n="titre.realisations">Nos réalisations</h2>
-        <div id="realisations-grid" class="realisations-grid"></div>
+        <div class="carousel">
+          <button type="button" class="carousel-btn carousel-prev" aria-label="Précédent">&#10094;</button>
+          <div class="carousel-viewport">
+            <div class="realisations-grid" id="realisations-grid"></div>
+          </div>
+          <button type="button" class="carousel-btn carousel-next" aria-label="Suivant">&#10095;</button>
+        </div>
       </div>
     </section>
 
@@ -92,16 +97,31 @@
       <p class="footer-name">HD TECHNOLOGIE</p>
       <p class="footer-slogan">Connectons le monde autrement</p>
       <p class="footer-copy" data-i18n="footer.copy">© 2026 HD TECHNOLOGIE. Tous droits réservés.</p>
+      <a href="admin.html" class="footer-admin">Espace admin</a>
     </div>
   </footer>
 
-  <!-- Scripts : l'ordre compte (langue.js doit venir APRÈS data.js, services.js et realisations.js) -->
+  <!-- Modale d'une réalisation (remplie par modale.js) -->
+  <div id="modale" class="modale" role="dialog" aria-modal="true" aria-labelledby="modale-titre" hidden>
+    <div class="modale-fond"></div>
+    <div class="modale-contenu">
+      <button type="button" class="modale-fermer" aria-label="Fermer">&times;</button>
+      <div class="modale-galerie"></div>
+      <span class="modale-statut"></span>
+      <h3 id="modale-titre"></h3>
+      <p id="modale-texte"></p>
+    </div>
+  </div>
+
+  <!-- Scripts : l'ordre compte (carrousel.js et modale.js APRÈS realisations.js ; langue.js APRÈS data.js, services.js et realisations.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
   <script src="js/config.js" defer></script>
   <script src="js/data.js" defer></script>
   <script src="js/reglages.js" defer></script>
   <script src="js/services.js" defer></script>
   <script src="js/realisations.js" defer></script>
+  <script src="js/carrousel.js" defer></script>
+  <script src="js/modale.js" defer></script>
   <script src="js/langue.js" defer></script>
   <script src="js/visites.js" defer></script>
   <script src="js/menu.js" defer></script>

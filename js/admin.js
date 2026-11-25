@@ -1,5 +1,6 @@
 // js/admin.js : espace administrateur
 const $ = (id) => document.getElementById(id);
+const MAX_PHOTOS = 10;
 
 // ---------- État connecté / non connecté ----------
 async function afficherEtat() {
@@ -28,7 +29,14 @@ $("form-connexion").addEventListener("submit", async (e) => {
     return;
   }
   $("mdp").value = "";
+  $("mdp").type = "password";
+  $("voir-mdp").checked = false;
   afficherEtat();
+});
+
+// B4 : afficher / cacher le mot de passe à la connexion
+$("voir-mdp").addEventListener("change", (e) => {
+  $("mdp").type = e.target.checked ? "text" : "password";
 });
 
 $("btn-deconnexion").addEventListener("click", async () => {
@@ -72,47 +80,81 @@ function reduireImage(fichier, max = 1280) {
   });
 }
 
-// ---------- Publier une réalisation ----------
+// Chemin d'un fichier dans le bucket "photos", à partir de son adresse publique
+function cheminStockage(url) {
+  return (url || "").split("/photos/")[1] || null;
+}
+
+// ---------- Publier une réalisation (B3 : plusieurs photos) ----------
 $("form-publier").addEventListener("submit", async (e) => {
   e.preventDefault();
   const msg = $("msg-publier");
+  const formulaire = e.target;
+  const bouton = formulaire.querySelector('button[type="submit"]');
+  const cheminsEnvoyes = [];   // pour nettoyer en cas d'échec
+
+  bouton.disabled = true;
   msg.textContent = "Envoi en cours...";
   try {
-    const fichier = $("photo").files[0];
-    if (!fichier) throw new Error("Choisis une photo.");
-    if (!fichier.type.startsWith("image/")) throw new Error("Le fichier doit être une image.");
+    const fichiers = Array.from($("photo").files);
+    if (!fichiers.length) throw new Error("Choisis au moins une photo.");
+    if (fichiers.length > MAX_PHOTOS) throw new Error("Maximum " + MAX_PHOTOS + " photos.");
+    if (fichiers.some((f) => !f.type.startsWith("image/"))) {
+      throw new Error("Tous les fichiers doivent être des images.");
+    }
 
-    const blob = await reduireImage(fichier);
-    const chemin = Date.now() + "-" + Math.random().toString(36).slice(2, 8) + ".jpg";
-    const envoi = await db.storage.from("photos").upload(chemin, blob, { contentType: "image/jpeg" });
-    if (envoi.error) throw envoi.error;
-    const url = db.storage.from("photos").getPublicUrl(chemin).data.publicUrl;
+    // 1) Réduire et envoyer chaque photo, l'une après l'autre (ménage la connexion)
+    const urls = [];
+    for (let i = 0; i < fichiers.length; i++) {
+      msg.textContent = "Envoi de la photo " + (i + 1) + " sur " + fichiers.length + "...";
+      const blob = await reduireImage(fichiers[i]);
+      const chemin = Date.now() + "-" + i + "-" + Math.random().toString(36).slice(2, 8) + ".jpg";
+      const envoi = await db.storage.from("photos").upload(chemin, blob, { contentType: "image/jpeg" });
+      if (envoi.error) throw envoi.error;
+      cheminsEnvoyes.push(chemin);
+      urls.push(db.storage.from("photos").getPublicUrl(chemin).data.publicUrl);
+    }
 
-    // Règle "tout ou rien" pour l'anglais
+    // 2) Règle "tout ou rien" pour l'anglais
     const titreEn = $("titre-en").value.trim();
     const descEn = $("desc-en").value.trim();
     const anglaisComplet = titreEn && descEn;
     const anglaisPartiel = (titreEn || descEn) && !anglaisComplet;
 
+    // 3) Créer la réalisation : image_url = première photo (couverture)
     const ajout = await db.from("realisations").insert({
       titre_fr: $("titre-fr").value.trim(),
       description_fr: $("desc-fr").value.trim() || null,
       titre_en: anglaisComplet ? titreEn : null,
       description_en: anglaisComplet ? descEn : null,
-      image_url: url,
+      image_url: urls[0],
       statut: $("statut").value,
       ordre: 0,
       visible: true
-    });
+    }).select("id").single();
     if (ajout.error) throw ajout.error;
 
-    e.target.reset();
+    // 4) Enregistrer toutes les images (la première a ordre = 0)
+    const lignes = urls.map((u, i) => ({ realisation_id: ajout.data.id, image_url: u, ordre: i }));
+    const imgs = await db.from("realisation_images").insert(lignes);
+    if (imgs.error) {
+      await db.from("realisations").delete().eq("id", ajout.data.id);   // on annule la réalisation
+      throw imgs.error;
+    }
+
+    formulaire.reset();
     msg.textContent = anglaisPartiel
       ? "Publié. Anglais ignoré : remplis le titre ET la description pour l'activer."
-      : "Publié.";
+      : "Publié (" + urls.length + " photo" + (urls.length > 1 ? "s" : "") + ").";
     chargerListe();
   } catch (err) {
+    // Échec : on supprime les fichiers déjà envoyés pour ne rien laisser d'orphelin
+    if (cheminsEnvoyes.length) {
+      await db.storage.from("photos").remove(cheminsEnvoyes);
+    }
     msg.textContent = "Erreur : " + err.message;
+  } finally {
+    bouton.disabled = false;
   }
 });
 
@@ -132,13 +174,22 @@ async function majRealisation(id, champs) {
   chargerListe();
 }
 
+// B3 : à la suppression, on supprime aussi TOUS les fichiers de la réalisation
 async function supprimerRealisation(r) {
   if (!confirm("Supprimer définitivement « " + r.titre_fr + " » ?")) return;
+
+  // 1) Lister les images AVANT la suppression (la base les efface en cascade)
+  const liste = await db.from("realisation_images").select("image_url").eq("realisation_id", r.id);
+  const urls = (liste.data || []).map((i) => i.image_url);
+  if (r.image_url) urls.push(r.image_url);
+  const chemins = [...new Set(urls.map(cheminStockage).filter(Boolean))];
+
+  // 2) Supprimer la réalisation (les lignes realisation_images partent avec)
   const { error } = await db.from("realisations").delete().eq("id", r.id);
   if (error) { alert("Erreur : " + error.message); return; }
-  // On supprime aussi le fichier image (on ignore l'erreur éventuelle)
-  const morceau = (r.image_url || "").split("/photos/")[1];
-  if (morceau) await db.storage.from("photos").remove([morceau]);
+
+  // 3) Supprimer les fichiers (on ignore une éventuelle erreur)
+  if (chemins.length) await db.storage.from("photos").remove(chemins);
   chargerListe();
 }
 
