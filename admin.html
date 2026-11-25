@@ -32,6 +32,9 @@
         <input type="email" id="email" required autocomplete="username">
         <label for="mdp">Mot de passe</label>
         <input type="password" id="mdp" required autocomplete="current-password">
+        <label for="voir-mdp" class="voir-mdp-label">
+           <input type="checkbox" id="voir-mdp"> Afficher le mot de passe
+        </label>
         <button type="submit" class="btn">Se connecter</button>
         <p id="msg-connexion" class="admin-message"></p>
       </form>
@@ -52,8 +55,8 @@
       <section class="admin-carte">
         <h2>Publier une réalisation ou un projet en cours</h2>
         <form id="form-publier">
-          <label for="photo">Photo</label>
-          <input type="file" id="photo" accept="image/*" required>
+          <label for="photo">Photos (la première choisie sera la couverture, 10 maximum)</label>
+          <input type="file" id="photo" accept="image/*" multiple required>
           <label for="statut">Statut</label>
           <select id="statut">
             <option value="termine">Terminé</option>
