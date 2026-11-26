@@ -52,7 +52,7 @@
         <p class="hero-text" data-i18n="hero.texte">Réseau, sécurité, domotique, énergie renouvelable : à Bohicon et Cotonou.</p>
         <div class="hero-buttons">
           <a href="#contact" class="btn" data-i18n="hero.devis">Demander un devis</a>
-          <a href="tel:+2290166227171" class="btn btn-outline" data-i18n="hero.appeler">Nous appeler</a>
+          <a href="tel:+2290166227171" class="btn btn-outline" data-i18n="hero.appeler" data-lien-appel>Nous appeler</a>
         </div>
       </div>
     </section>
@@ -79,17 +79,125 @@
 
     <section id="apropos" class="section">
       <div class="container">
-        <h2 class="section-title" data-i18n="titre.apropos">À propos</h2>
-        <p>Section à remplir à l'étape 2.</p>
+<h2 class="section-title" data-i18n="titre.apropos">À propos</h2>
+
+<div class="about">
+  <div class="about-bloc">
+    <p class="about-text" data-i18n="apropos.p1">HD TECHNOLOGIE est une entreprise spécialisée dans le réseau informatique et les télécommunications, basée à Bohicon et à Cotonou. Son slogan résume sa vision : « Connectons le monde autrement ».</p>
+    <p class="about-text" data-i18n="apropos.p2">Autour du réseau, l'entreprise propose aussi la vidéosurveillance, la sécurité, la domotique, l'énergie renouvelable et le développement web et logiciel.</p>
+    <p class="about-text" data-i18n="apropos.p3">Particulier ou structure, vous pouvez la contacter pour étudier votre projet et obtenir un devis.</p>
+  </div>
+
+  <div class="about-card">
+    <img src="images/logo.png" alt="HD TECHNOLOGIE" class="about-logo">
+    <p class="about-slogan">Connectons le monde autrement</p>
+  </div>
+</div>
+
+<ul class="about-points about-points-row">
+  <li class="about-point"><strong>6</strong><span data-i18n="apropos.pt1">domaines d'expertise</span></li>
+  <li class="about-point"><strong>2</strong><span data-i18n="apropos.pt2">villes</span></li>
+  <li class="about-point"><strong data-i18n="apropos.pt3t">Devis</strong><span data-i18n="apropos.pt3">sur demande</span></li>
+</ul>
+
+<div class="about-villes">
+  <div class="about-point"><strong>Bohicon</strong></div>
+  <div class="about-point"><strong>Cotonou</strong></div>
+</div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <div class="container">
-        <h2 class="section-title" data-i18n="titre.contact">Contact</h2>
-        <p>Section à remplir à l'étape 6.</p>
+<section id="contact" class="section">
+  <div class="container">
+    <h2 class="section-title" data-i18n="titre.contact">Contact</h2>
+    <p class="section-intro" data-i18n="contact.intro">Une question, un projet ? Contactez-nous.</p>
+
+    <div class="contact-grid">
+
+      <a class="contact-card" id="contact-whatsapp" href="#" target="_blank" rel="noopener" hidden>
+        <span class="contact-icone" data-icone="whatsapp"></span>
+        <span class="contact-texte">
+          <span class="contact-label">WhatsApp</span>
+          <span class="contact-valeur"></span>
+        </span>
+      </a>
+
+      <a class="contact-card" id="contact-telephone" href="#" hidden>
+        <span class="contact-icone" data-icone="telephone"></span>
+        <span class="contact-texte">
+          <span class="contact-label" data-i18n="contact.telephone">Téléphone</span>
+          <span class="contact-valeur"></span>
+        </span>
+      </a>
+
+      <a class="contact-card" id="contact-email" href="#" hidden>
+        <span class="contact-icone" data-icone="email"></span>
+        <span class="contact-texte">
+          <span class="contact-label" data-i18n="contact.email">Email</span>
+          <span class="contact-valeur"></span>
+        </span>
+      </a>
+
+      <a class="contact-card" id="contact-facebook" href="#" target="_blank" rel="noopener" hidden>
+        <span class="contact-icone" data-icone="facebook"></span>
+        <span class="contact-texte">
+          <span class="contact-label">Facebook</span>
+          <span class="contact-valeur"></span>
+        </span>
+      </a>
+
+      <div class="contact-card" id="contact-horaires" hidden>
+        <span class="contact-icone" data-icone="horaires"></span>
+        <span class="contact-texte">
+          <span class="contact-label" data-i18n="contact.horaires">Horaires</span>
+          <span class="contact-valeur"></span>
+        </span>
       </div>
-    </section>
+
+    </div>
+        <form id="devis-form" class="devis-form" novalidate>
+     <h3 class="devis-titre" data-i18n="devis.titre">Demander un devis</h3>
+
+    <label class="devis-champ">
+      <span data-i18n="devis.nom">Votre nom</span>
+      <input type="text" name="nom" required autocomplete="name">
+    </label>
+
+    <label class="devis-champ">
+      <span data-i18n="devis.telephone">Votre téléphone</span>
+      <input type="tel" name="telephone" required autocomplete="tel" inputmode="tel">
+    </label>
+
+    <label class="devis-champ">
+      <span data-i18n="devis.service">Service souhaité</span>
+      <select name="service" required>
+        <option value="" data-i18n="devis.choisir">Choisir un service</option>
+        <option value="Réseau informatique et télécommunications" data-i18n="devis.s.reseau">Réseau et télécommunications</option>
+        <option value="Vidéosurveillance" data-i18n="devis.s.video">Vidéosurveillance</option>
+        <option value="Sécurité" data-i18n="devis.s.securite">Sécurité</option>
+        <option value="Domotique" data-i18n="devis.s.domotique">Domotique</option>
+        <option value="Énergie renouvelable" data-i18n="devis.s.energie">Énergie renouvelable</option>
+        <option value="Développement web et logiciel" data-i18n="devis.s.dev">Développement web et logiciel</option>
+      </select>
+    </label>
+
+    <label class="devis-champ">
+      <span data-i18n="devis.ville">Ville</span>
+      <select name="ville" required>
+        <option value="Bohicon">Bohicon</option>
+        <option value="Cotonou">Cotonou</option>
+      </select>
+    </label>
+
+    <label class="devis-champ devis-large">
+      <span data-i18n="devis.besoin">Décrivez votre besoin</span>
+      <textarea name="besoin" rows="4" required></textarea>
+    </label>
+
+    <button type="submit" class="btn devis-envoyer" data-i18n="devis.envoyer">Envoyer sur WhatsApp</button>
+  </form>
+  </div>
+</section>
   </main>
 
   <footer class="footer">
@@ -123,8 +231,10 @@
   <script src="js/carrousel.js" defer></script>
   <script src="js/modale.js" defer></script>
   <script src="js/langue.js" defer></script>
+  <script src="js/devis.js" defer></script>
   <script src="js/visites.js" defer></script>
   <script src="js/menu.js" defer></script>
   <script src="js/fond.js" defer></script>
+  <script src="js/fond-footer.js" defer></script>
 </body>
 </html>

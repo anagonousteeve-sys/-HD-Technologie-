@@ -86,10 +86,12 @@
         <form id="form-reglages">
           <label for="reg-whatsapp">WhatsApp (chiffres seulement, avec l'indicatif : 2290166227171)</label>
           <input type="text" id="reg-whatsapp" inputmode="numeric">
-          <label for="reg-telephone">Téléphone</label>
+          <label for="reg-telephone">Téléphone (ex : +229 01 66 22 71 71)</label>
           <input type="text" id="reg-telephone">
           <label for="reg-email">Email</label>
           <input type="email" id="reg-email">
+          <label for="reg-facebook">Page Facebook (lien complet commençant par https://, laisser vide pour la cacher)</label>
+          <input type="url" id="reg-facebook" inputmode="url" placeholder="https://www.facebook.com/...">
           <label for="reg-slogan-fr">Slogan (français)</label>
           <input type="text" id="reg-slogan-fr">
           <label for="reg-slogan-en">Slogan (English)</label>
@@ -98,6 +100,30 @@
           <p id="msg-reglages" class="admin-message"></p>
         </form>
       </section>
+
+      <section class="admin-carte">
+  <h2>Texte de la page À propos</h2>
+  <p>Trois paragraphes. Si l'anglais d'un paragraphe est vide, le site affiche le français. Si tout est vide, le site garde son texte d'origine.</p>
+  <form id="form-apropos">
+    <label for="ap1-fr">Paragraphe 1 (français)</label>
+    <textarea id="ap1-fr" rows="4" maxlength="1500"></textarea>
+    <label for="ap1-en">Paragraph 1 (English)</label>
+    <textarea id="ap1-en" rows="4" maxlength="1500"></textarea>
+
+    <label for="ap2-fr">Paragraphe 2 (français)</label>
+    <textarea id="ap2-fr" rows="4" maxlength="1500"></textarea>
+    <label for="ap2-en">Paragraph 2 (English)</label>
+    <textarea id="ap2-en" rows="4" maxlength="1500"></textarea>
+
+    <label for="ap3-fr">Paragraphe 3 (français)</label>
+    <textarea id="ap3-fr" rows="4" maxlength="1500"></textarea>
+    <label for="ap3-en">Paragraph 3 (English)</label>
+    <textarea id="ap3-en" rows="4" maxlength="1500"></textarea>
+
+    <button type="submit" class="btn">Enregistrer le texte</button>
+    <p id="msg-apropos" class="admin-message"></p>
+  </form>
+</section>
 
       <section class="admin-carte">
         <h2>Changer mon mot de passe</h2>

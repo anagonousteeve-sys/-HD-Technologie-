@@ -955,3 +955,242 @@ a {
   .lightbox-prec { left: 6px; }
   .lightbox-suiv { right: 6px; }
 }
+
+/* ---------- 18. Section Contact ---------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--blanc);
+  border: 1px solid var(--bleu-clair);   /* la section est sur fond blanc : le contour fait ressortir la carte */
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Seules les cartes qui sont des liens réagissent au survol (pas les horaires) */
+a.contact-card:hover,
+a.contact-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 22, 80, 0.16);
+}
+
+.contact-icone {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  background-color: var(--bleu);   /* couleur de l'icône */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-image: var(--icone);   /* la forme vient de la variable --icone, définie plus bas */
+  mask-image: var(--icone);
+}
+
+.contact-texte {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;                    /* permet au texte long de passer à la ligne */
+}
+
+.contact-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--bleu);
+}
+
+.contact-valeur {
+  font-weight: 600;
+  overflow-wrap: anywhere;         /* une longue adresse email ou un lien ne déborde pas */
+  white-space: pre-line;           /* respecte les retours à la ligne des horaires */
+}
+
+.contact-icone[data-icone="whatsapp"] {
+  --icone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-5A8.5 8.5 0 1 1 21 11.5z'/%3E%3Cpath d='M9 9.5c0 3 2.5 5.5 5.5 5.5'/%3E%3C/svg%3E");
+}
+
+.contact-icone[data-icone="telephone"] {
+  --icone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='2' width='10' height='20' rx='2'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E");
+}
+
+.contact-icone[data-icone="email"] {
+  --icone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3 7l9 6 9-6'/%3E%3C/svg%3E");
+}
+
+.contact-icone[data-icone="facebook"] {
+  --icone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z'/%3E%3C/svg%3E");
+}
+
+.contact-icone[data-icone="horaires"] {
+  --icone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+}
+
+/* ---------- 19. Formulaire de devis ---------- */
+.devis-form {
+  margin-top: 40px;
+  padding: 28px;
+  background: var(--blanc);
+  border: 1px solid var(--bleu-clair);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(15, 22, 80, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.devis-titre {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--bleu);
+}
+
+.devis-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--bleu);
+}
+
+.devis-large {
+  grid-column: 1 / -1;
+}
+
+.devis-champ input,
+.devis-champ select,
+.devis-champ textarea {
+  width: 100%;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texte);
+  background: var(--blanc);
+  border: 1px solid #C5CAE6;
+  border-radius: 8px;
+}
+
+.devis-champ textarea {
+  resize: vertical;
+}
+
+.devis-champ input:focus,
+.devis-champ select:focus,
+.devis-champ textarea:focus {
+  outline: 3px solid rgba(30, 42, 138, 0.35);
+  border-color: var(--bleu);
+}
+
+.devis-envoyer {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .devis-form {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  /* le bouton d'en-tête est caché sur petit écran : celui du formulaire doit rester visible */
+  .devis-envoyer {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* ---------- 20. À propos : carte logo, points forts, villes ---------- */
+.about-bloc .about-text + .about-text {
+  margin-top: 16px;
+}
+
+.about-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 260px;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--blanc);
+  border-radius: 12px;
+  background: linear-gradient(160deg, var(--bleu-fonce) 0%, var(--bleu) 60%, #5560C4 100%);
+  box-shadow: 0 10px 24px rgba(15, 22, 80, 0.2);
+}
+
+.about-logo {
+  width: 70%;
+  max-width: 240px;
+  height: auto;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: screen;
+}
+.about-slogan {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.about-points-row {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 40px;
+}
+
+.about-villes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+@media (max-width: 768px) {
+  .about-points-row {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+}
+/* ---------- 21. Animation de fond du pied de page (canvas créé par js/fond-footer.js) ---------- */
+.footer {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;   /* le lien « Espace admin » reste cliquable */
+}
+
+.footer .container {
+  position: relative;
+  z-index: 1;
+}

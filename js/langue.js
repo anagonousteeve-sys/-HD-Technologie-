@@ -1,5 +1,5 @@
 // js/langue.js : bouton FR / EN
-// Il doit être chargé APRÈS data.js, services.js et realisations.js (voir index.html)
+// Il doit être chargé APRÈS data.js, reglages.js, services.js et realisations.js (voir index.html)
 
 const boutonLangue = document.getElementById("lang-btn");
 
@@ -19,6 +19,31 @@ const dictionnaire = {
     "titre.realisations": "Nos réalisations",
     "titre.apropos": "À propos",
     "titre.contact": "Contact",
+    "contact.intro": "Une question, un projet ? Contactez-nous.",
+    "contact.telephone": "Téléphone",
+    "contact.email": "Email",
+    "contact.horaires": "Horaires",
+    "devis.titre": "Demander un devis",
+    "devis.nom": "Votre nom",
+    "devis.telephone": "Votre téléphone",
+    "devis.service": "Service souhaité",
+    "devis.choisir": "Choisir un service",
+    "devis.s.reseau": "Réseau et télécommunications",
+    "devis.s.video": "Vidéosurveillance",
+    "devis.s.securite": "Sécurité",
+    "devis.s.domotique": "Domotique",
+    "devis.s.energie": "Énergie renouvelable",
+    "devis.s.dev": "Développement web et logiciel",
+    "devis.ville": "Ville",
+    "devis.besoin": "Décrivez votre besoin",
+    "devis.envoyer": "Envoyer sur WhatsApp",
+    "apropos.p1": "HD TECHNOLOGIE est une entreprise spécialisée dans le réseau informatique et les télécommunications, basée à Bohicon et à Cotonou. Son slogan résume sa vision : « Connectons le monde autrement ».",
+    "apropos.p2": "Autour du réseau, l'entreprise propose aussi la vidéosurveillance, la sécurité, la domotique, l'énergie renouvelable et le développement web et logiciel.",
+    "apropos.p3": "Particulier ou structure, vous pouvez la contacter pour étudier votre projet et obtenir un devis.",
+    "apropos.pt1": "domaines d'expertise",
+    "apropos.pt2": "villes",
+    "apropos.pt3t": "Devis",
+    "apropos.pt3": "sur demande",
     "footer.copy": "© 2026 HD TECHNOLOGIE. Tous droits réservés."
   },
   en: {
@@ -34,6 +59,31 @@ const dictionnaire = {
     "titre.realisations": "Our projects",
     "titre.apropos": "About",
     "titre.contact": "Contact",
+    "contact.intro": "A question or a project? Get in touch.",
+    "contact.telephone": "Phone",
+    "contact.email": "Email",
+    "contact.horaires": "Opening hours",
+    "devis.titre": "Request a quote",
+    "devis.nom": "Your name",
+    "devis.telephone": "Your phone number",
+    "devis.service": "Service needed",
+    "devis.choisir": "Choose a service",
+    "devis.s.reseau": "Networks and telecommunications",
+    "devis.s.video": "Video surveillance",
+    "devis.s.securite": "Security",
+    "devis.s.domotique": "Home automation",
+    "devis.s.energie": "Renewable energy",
+    "devis.s.dev": "Web and software development",
+    "devis.ville": "City",
+    "devis.besoin": "Describe your need",
+    "devis.envoyer": "Send on WhatsApp",
+    "apropos.p1": "HD TECHNOLOGIE is a company specialized in computer networking and telecommunications, based in Bohicon and Cotonou. Its motto sums up its vision: “Connecting the world differently.”",
+    "apropos.p2": "Alongside networking, the company also offers video surveillance, security, home automation, renewable energy, and web and software development.",
+    "apropos.p3": "Whether you are an individual or an organization, you can contact the company to discuss your project and get a quote.",
+    "apropos.pt1": "areas of expertise",
+    "apropos.pt2": "cities",
+    "apropos.pt3t": "Quote",
+    "apropos.pt3": "on request",
     "footer.copy": "© 2026 HD TECHNOLOGIE. All rights reserved."
   }
 };
@@ -59,26 +109,15 @@ function appliquerTextes() {
   }
 }
 
-// ---------- 4. Le slogan (vient de la base, table reglages) ----------
-async function appliquerSlogan() {
-  const reglages = await chargerReglages();
-  const slogan = reglages.slogan;
-  if (!slogan) return;
-  const texte = slogan["valeur_" + langue] || slogan.valeur_fr;
-  if (!texte) return;
-  document.querySelectorAll(".slogan, .footer-slogan").forEach((el) => {
-    el.textContent = texte;
-  });
-}
-
-// ---------- 5. Redessiner ce qui vient de la base ----------
+// ---------- 4. Redessiner ce qui vient de la base ----------
+// (le slogan, les contacts et les horaires sont gérés par appliquerReglages(), dans reglages.js)
 async function redessiner() {
   afficherServices(await chargerServices(), langue);
   afficherRealisations(await chargerRealisations(), langue);
-  appliquerSlogan();
+  appliquerReglages();
 }
 
-// ---------- 6. Démarrage ----------
+// ---------- 5. Démarrage ----------
 // On reprend le choix précédent, sinon le français.
 // Cette ligne s'exécute avant le dessin des cartes : elles s'afficheront dans la bonne langue.
 langue = lireChoix() === "en" ? "en" : "fr";

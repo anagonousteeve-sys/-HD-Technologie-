@@ -223,16 +223,31 @@ async function chargerListe() {
     zone.appendChild(ligne);
   });
 }
-
 // ---------- Infos du site (table reglages) ----------
+
+// Vérifie qu'un lien est bien une page Facebook en https (même règle que le site public)
+function lienFacebookValide(texte) {
+  try {
+    const u = new URL(texte);
+    return u.protocol === "https:" && /(^|\.)(facebook\.com|fb\.com|fb\.me)$/.test(u.hostname);
+  } catch (e) {
+    return false;   // ce n'est pas une adresse valide
+  }
+}
+
 async function remplirReglages() {
   const reglages = await chargerReglages();
   const val = (cle, lang) => (reglages[cle] && reglages[cle]["valeur_" + lang]) || "";
   $("reg-whatsapp").value = val("whatsapp", "fr");
   $("reg-telephone").value = val("telephone", "fr");
   $("reg-email").value = val("email", "fr");
+  $("reg-facebook").value = val("facebook", "fr");
   $("reg-slogan-fr").value = val("slogan", "fr");
   $("reg-slogan-en").value = val("slogan", "en");
+  for (let n = 1; n <= 3; n++) {
+    $("ap" + n + "-fr").value = val("apropos_p" + n, "fr");
+    $("ap" + n + "-en").value = val("apropos_p" + n, "en");
+  }
 }
 
 $("form-reglages").addEventListener("submit", async (e) => {
@@ -244,15 +259,44 @@ $("form-reglages").addEventListener("submit", async (e) => {
     return;
   }
   const tel = $("reg-telephone").value.trim();
+  if (tel && !/^\+?[0-9][0-9 .()-]{6,20}$/.test(tel)) {
+    msg.textContent = "Téléphone : chiffres seulement, avec ou sans + (ex : +229 01 66 22 71 71).";
+    return;
+  }
   const mail = $("reg-email").value.trim();
+  const fb = $("reg-facebook").value.trim();
+  if (fb && !lienFacebookValide(fb)) {
+    msg.textContent = "Facebook : colle le lien complet de la page, qui commence par https:// (facebook.com, fb.com ou fb.me).";
+    return;
+  }
   const { error } = await db.from("reglages").upsert([
     { cle: "whatsapp", valeur_fr: wa, valeur_en: wa },
     { cle: "telephone", valeur_fr: tel, valeur_en: tel },
     { cle: "email", valeur_fr: mail, valeur_en: mail },
+    { cle: "facebook", valeur_fr: fb, valeur_en: fb },
     { cle: "slogan", valeur_fr: $("reg-slogan-fr").value.trim(), valeur_en: $("reg-slogan-en").value.trim() }
   ]);
   msg.textContent = error ? "Erreur : " + error.message : "Enregistré.";
 });
+
+// ---------- Texte de la page À propos (clés apropos_p1 à p3) ----------
+$("form-apropos").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = $("msg-apropos");
+  const lignes = [];
+  for (let n = 1; n <= 3; n++) {
+    const fr = $("ap" + n + "-fr").value.trim();
+    const en = $("ap" + n + "-en").value.trim();
+    if (en && !fr) {
+      msg.textContent = "Paragraphe " + n + " : écris d'abord la version française.";
+      return;
+    }
+    lignes.push({ cle: "apropos_p" + n, valeur_fr: fr, valeur_en: en });
+  }
+  const { error } = await db.from("reglages").upsert(lignes);
+  msg.textContent = error ? "Erreur : " + error.message : "Texte enregistré.";
+});
+
 
 // ---------- Changer le mot de passe (Supabase Auth, pas une table) ----------
 $("form-mdp").addEventListener("submit", async (e) => {
