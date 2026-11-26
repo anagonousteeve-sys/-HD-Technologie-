@@ -24,7 +24,7 @@
   const INCLINAISON = 0.25;      // le globe penche vers l'avant
   const PENCHE = -0.45;          // l'axe du globe est penché sur le côté (comme le logo)
   const OUVERTURE = 0.45;        // le croissant s'ouvre plus en haut qu'en bas
-  const NB_FLOTTANTS = 35;       // petits carrés qui flottent
+  const NB_FLOTTANTS = 45;       // petits carrés qui flottent
 
   const reduireMouvement = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
